@@ -1,0 +1,68 @@
+# See https://github.com/github/gitignore/blob/main/Rails.gitignore for reference
+
+# Bundler
+/.bundle
+/vendor/bundle
+/vendor/cache
+
+# Logs and temp files
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/tmp/pids/*
+/tmp/cache/*
+/tmp/sockets/*
+
+# Storage (uploaded files, SQLite in Rails 7/8 defaults)
+/storage/*
+!/storage/.keep
+
+# SQLite databases
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-*
+
+# Assets and builds
+/public/assets
+/public/packs
+/public/packs-test
+/public/vite-assets
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+# Coverage
+/coverage/
+
+# Node/Yarn
+/node_modules/
+/yarn-error.log
+/npm-debug.log*
+/pnpm-debug.log*
+/lerna-debug.log*
+
+# Credentials and env
+/config/master.key
+/config/credentials/*.key
+.env*
+!.env.example
+
+# IDE/editor
+/.idea
+/.vscode
+*.swp
+*~
+.DS_Store
+
+# Debugging
+.byebug_history
+
+# RSpec artifacts
+/spec/examples.txt
+
+# RuboCop cache (when using remote configs)
+/.rubocop-http*
+/.rubocop-https*
+
+# Kamal deploy secrets
+/.kamal/secrets
