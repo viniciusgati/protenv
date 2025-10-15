@@ -30,7 +30,12 @@
         <p><strong>App Server:</strong> <%= inst.appserver_binario&.name %></p>
         <p><strong>DB Access:</strong> <%= inst.dbaccess_binario&.name %></p>
         <p><strong>Banco:</strong> <%= inst.banco&.name %></p>
-        <p style="color: var(--muted); font-size: 0.9rem;">Criado por <%= inst.user&.email %> em <%= l(inst.created_at, format: :short) rescue inst.created_at.to_s %></p>
+        <p style="color: var(--muted); font-size: 0.9rem; display:flex; align-items:center; gap:8px;">
+          <% if inst.user&.avatar&.attached? %>
+            <%= image_tag inst.user.avatar, alt: inst.user.display_name, style: "width:20px;height:20px;border-radius:50%;object-fit:cover;" %>
+          <% end %>
+          <span>Criado por <strong><%= inst.user&.display_name %></strong> em <%= l(inst.created_at, format: :short) rescue inst.created_at.to_s %></span>
+        </p>
         <p>
           <%= link_to 'Abrir', inst %>
         </p>

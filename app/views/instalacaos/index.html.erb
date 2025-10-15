@@ -22,7 +22,12 @@
         <td><%= instalacao.appserver_binario&.name %></td>
         <td><%= instalacao.dbaccess_binario&.name %></td>
         <td><%= instalacao.banco&.name %></td>
-        <td><%= instalacao.user&.email %></td>
+        <td>
+          <% if instalacao.user&.avatar&.attached? %>
+            <%= image_tag instalacao.user.avatar, alt: instalacao.user.display_name, style: "width:20px;height:20px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:6px;" %>
+          <% end %>
+          <%= instalacao.user&.display_name %>
+        </td>
         <td>
           <%= link_to "Mostrar", instalacao %>
           <%= link_to "Editar", edit_instalacao_path(instalacao) %>

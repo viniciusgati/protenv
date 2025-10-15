@@ -19,8 +19,11 @@
     <%= instalacao.banco&.name %>
   </p>
 
-  <p>
-    <strong>Criado por:</strong>
-    <%= instalacao.user&.email %>
+  <p style="display:flex; align-items:center; gap:8px;">
+    <strong style="margin-right:6px;">Criado por:</strong>
+    <% if instalacao.user&.avatar&.attached? %>
+      <%= image_tag instalacao.user.avatar, alt: instalacao.user.display_name, style: "width:24px;height:24px;border-radius:50%;object-fit:cover;" %>
+    <% end %>
+    <span><%= instalacao.user&.display_name %></span>
   </p>
 </div>
