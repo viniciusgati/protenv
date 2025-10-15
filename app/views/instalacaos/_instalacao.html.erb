@@ -1,0 +1,26 @@
+<div id="<%= dom_id instalacao %>">
+  <p>
+    <strong>Nome:</strong>
+    <%= instalacao.name %>
+  </p>
+
+  <p>
+    <strong>App Server:</strong>
+    <%= instalacao.appserver_binario&.name %>
+  </p>
+
+  <p>
+    <strong>DB Access:</strong>
+    <%= instalacao.dbaccess_binario&.name %>
+  </p>
+
+  <p>
+    <strong>Banco:</strong>
+    <%= instalacao.banco&.name %>
+  </p>
+
+  <p>
+    <strong>Criado por:</strong>
+    <%= instalacao.user&.email %>
+  </p>
+</div>

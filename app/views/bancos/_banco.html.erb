@@ -1,0 +1,18 @@
+<div id="<%= dom_id banco %>">
+  <p>
+    <strong>Name:</strong>
+    <%= banco.name %>
+  </p>
+
+  <p>
+    <strong>Tipo:</strong>
+    <%= banco.tipo %>
+  </p>
+
+  <% if banco.backup.attached? %>
+    <p>
+      <strong>Backup:</strong>
+      <%= link_to banco.backup.filename.to_s, url_for(banco.backup) %>
+    </p>
+  <% end %>
+</div>

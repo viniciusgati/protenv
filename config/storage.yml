@@ -1,0 +1,12 @@
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+# Configure production as needed (e.g., S3). Defaulting to Disk for now.
+production:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>

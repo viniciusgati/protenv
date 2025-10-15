@@ -1,0 +1,12 @@
+<% content_for :title, "Editing banco" %>
+
+<h1>Editing banco</h1>
+
+<%= render "form", banco: @banco %>
+
+<br>
+
+<div>
+  <%= link_to "Show this banco", @banco %> |
+  <%= link_to "Back to bancos", bancos_path %>
+</div>

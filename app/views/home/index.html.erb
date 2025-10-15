@@ -1,2 +1,43 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<% if user_signed_in? %>
+  <h1>Minhas Instalações</h1>
+
+  <div class="card" style="margin-bottom:16px;">
+    <%= form_with url: root_path, method: :get, local: true do |f| %>
+      <div style="display:grid; grid-template-columns: 1fr 1fr 1fr auto; gap:12px; align-items:end;">
+        <div>
+          <%= label_tag :q, 'Nome' %>
+          <%= text_field_tag :q, params[:q] %>
+        </div>
+        <div>
+          <%= label_tag :appserver_binario_id, 'App Server' %>
+          <%= select_tag :appserver_binario_id, options_from_collection_for_select(@appservers, :id, :name, params[:appserver_binario_id]), include_blank: true %>
+        </div>
+        <div>
+          <%= label_tag :dbaccess_binario_id, 'DB Access' %>
+          <%= select_tag :dbaccess_binario_id, options_from_collection_for_select(@dbaccesses, :id, :name, params[:dbaccess_binario_id]), include_blank: true %>
+        </div>
+        <div>
+          <%= submit_tag 'Filtrar' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:16px;">
+    <% @instalacaos.each do |inst| %>
+      <div class="card">
+        <h3 style="margin-top:0;"> <%= inst.name %> </h3>
+        <p><strong>App Server:</strong> <%= inst.appserver_binario&.name %></p>
+        <p><strong>DB Access:</strong> <%= inst.dbaccess_binario&.name %></p>
+        <p><strong>Banco:</strong> <%= inst.banco&.name %></p>
+        <p style="color: var(--muted); font-size: 0.9rem;">Criado por <%= inst.user&.email %> em <%= l(inst.created_at, format: :short) rescue inst.created_at.to_s %></p>
+        <p>
+          <%= link_to 'Abrir', inst %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <h1>Bem-vindo</h1>
+  <p>Faça login para ver suas instalações.</p>
+<% end %>

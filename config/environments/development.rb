@@ -40,6 +40,9 @@ Rails.application.configure do
   # Append comments with runtime information tags to SQL queries in logs.
   config.active_record.query_log_tags_enabled = true
 
+  # Active Storage service for development
+  config.active_storage.service = :local
+
   # Devise needs a default host for URL generation in development.
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 

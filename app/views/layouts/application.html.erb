@@ -23,15 +23,24 @@
 
   <body>
     <nav>
+      <%= link_to 'Home', root_path %>
+      <%= link_to 'Binários', binarios_path %>
+      <%= link_to 'Bancos', bancos_path %>
+      <%= link_to 'Instalações', instalacaos_path %>
+      <span style="flex:1"></span>
       <% if user_signed_in? %>
         <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
       <% else %>
-        <%= link_to 'Login', new_user_session_path %> |
+        <%= link_to 'Login', new_user_session_path %>
         <%= link_to 'Sign up', new_user_registration_path %>
       <% end %>
     </nav>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div class="card">
+        <%= yield %>
+      </div>
+    </div>
   </body>
 </html>

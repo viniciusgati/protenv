@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @instalacao %>
+
+<div>
+  <%= link_to "Edit this instalacao", edit_instalacao_path(@instalacao) %> |
+  <%= link_to "Back to instalacaos", instalacaos_path %>
+
+  <%= button_to "Destroy this instalacao", @instalacao, method: :delete %>
+</div>

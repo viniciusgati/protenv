@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @binario %>
+
+<div>
+  <%= link_to "Edit this binario", edit_binario_path(@binario) %> |
+  <%= link_to "Back to binarios", binarios_path %>
+
+  <%= button_to "Destroy this binario", @binario, method: :delete %>
+</div>

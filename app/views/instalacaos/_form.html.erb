@@ -1,0 +1,37 @@
+<%= form_with(model: instalacao) do |form| %>
+  <% if instalacao.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(instalacao.errors.count, "error") %> prohibited this instalacao from being saved:</h2>
+
+      <ul>
+        <% instalacao.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :appserver_binario_id, 'App Server', style: "display: block" %>
+    <%= form.collection_select :appserver_binario_id, Binario.appserver, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.label :dbaccess_binario_id, 'DB Access', style: "display: block" %>
+    <%= form.collection_select :dbaccess_binario_id, Binario.dbaccess, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.label :banco_id, 'Banco de Dados', style: "display: block" %>
+    <%= form.collection_select :banco_id, Banco.all, :id, :name, include_blank: true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

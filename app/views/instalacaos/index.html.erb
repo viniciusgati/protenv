@@ -1,0 +1,38 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Instalações" %>
+
+<h1>Instalações</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>App Server</th>
+      <th>DB Access</th>
+      <th>Banco</th>
+      <th>Criado por</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @instalacaos.each do |instalacao| %>
+      <tr>
+        <td><%= instalacao.name %></td>
+        <td><%= instalacao.appserver_binario&.name %></td>
+        <td><%= instalacao.dbaccess_binario&.name %></td>
+        <td><%= instalacao.banco&.name %></td>
+        <td><%= instalacao.user&.email %></td>
+        <td>
+          <%= link_to "Mostrar", instalacao %>
+          <%= link_to "Editar", edit_instalacao_path(instalacao) %>
+          <%= button_to "Excluir", instalacao, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to "Nova instalação", new_instalacao_path %>
+</p>

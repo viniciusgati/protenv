@@ -1,0 +1,17 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @banco %>
+
+<% if @banco.backup.attached? %>
+  <p>
+    <strong>Backup:</strong>
+    <%= link_to @banco.backup.filename.to_s, url_for(@banco.backup) %>
+  </p>
+<% end %>
+
+<div>
+  <%= link_to "Edit this banco", edit_banco_path(@banco) %> |
+  <%= link_to "Back to bancos", bancos_path %>
+
+  <%= button_to "Destroy this banco", @banco, method: :delete %>
+</div>

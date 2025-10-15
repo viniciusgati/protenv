@@ -1,0 +1,42 @@
+<%= form_with(model: binario) do |form| %>
+  <% if binario.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(binario.errors.count, "error") %> prohibited this binario from being saved:</h2>
+
+      <ul>
+        <% binario.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :tipo, style: "display: block" %>
+    <%= form.select :tipo, Binario.tipos.keys.map { |k| [k.humanize, k] }, {}, class: "select" %>
+  </div>
+
+  <div>
+    <%= form.label :download_url, style: "display: block" %>
+    <%= form.text_field :download_url %>
+  </div>
+
+  <div>
+    <%= form.label :auth_username, style: "display: block" %>
+    <%= form.text_field :auth_username %>
+  </div>
+
+  <div>
+    <%= form.label :auth_password, style: "display: block" %>
+    <%= form.text_field :auth_password %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

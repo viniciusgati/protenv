@@ -1,0 +1,36 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Binários" %>
+
+<h1>Binários</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>URL</th>
+      <th>Usuário</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @binarios.each do |binario| %>
+      <tr>
+        <td><%= binario.name %></td>
+        <td><%= binario.tipo %></td>
+        <td><%= binario.download_url %></td>
+        <td><%= binario.auth_username %></td>
+        <td>
+          <%= link_to "Mostrar", binario %>
+          <%= link_to "Editar", edit_binario_path(binario) %>
+          <%= button_to "Excluir", binario, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to "Novo binário", new_binario_path %>
+</p>

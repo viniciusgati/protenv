@@ -1,0 +1,34 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Bancos" %>
+
+<h1>Bancos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Tipo</th>
+      <th>Backup</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bancos.each do |banco| %>
+      <tr>
+        <td><%= banco.name %></td>
+        <td><%= banco.tipo %></td>
+        <td><%= banco.backup.attached? ? banco.backup.filename.to_s : '-' %></td>
+        <td>
+          <%= link_to "Mostrar", banco %>
+          <%= link_to "Editar", edit_banco_path(banco) %>
+          <%= button_to "Excluir", banco, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p>
+  <%= link_to "Novo banco", new_banco_path %>
+</p>
