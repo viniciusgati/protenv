@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_15_221952) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_19_215008) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -56,6 +56,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_221952) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "download_tasks", force: :cascade do |t|
+    t.integer "instalacao_id", null: false
+    t.integer "binario_id", null: false
+    t.integer "status"
+    t.integer "progress"
+    t.text "error_message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["binario_id"], name: "index_download_tasks_on_binario_id"
+    t.index ["instalacao_id"], name: "index_download_tasks_on_instalacao_id"
+  end
+
   create_table "instalacaos", force: :cascade do |t|
     t.string "name"
     t.integer "appserver_binario_id", null: false
@@ -79,12 +91,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_15_221952) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+    t.text "totvs_username"
+    t.text "totvs_password"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "download_tasks", "binarios"
+  add_foreign_key "download_tasks", "instalacaos"
   add_foreign_key "instalacaos", "bancos"
   add_foreign_key "instalacaos", "binarios", column: "appserver_binario_id"
   add_foreign_key "instalacaos", "binarios", column: "dbaccess_binario_id"

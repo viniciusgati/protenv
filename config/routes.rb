@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  resources :instalacaos
+  resources :instalacaos do
+    member do
+      get :maintenance
+      post :start_download
+      post :start_all_downloads
+      get :download_progress
+    end
+  end
   resources :bancos
   resources :binarios
   get "home/index"
@@ -16,4 +23,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
+
+  resource :credentials, only: [:edit, :update], controller: "credentials"
 end

@@ -18,11 +18,11 @@ RSpec.describe "/bancos", type: :request do
   # Banco. As you add validations to Banco, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: "Banco A", tipo: :postgres }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: "", tipo: nil }
   }
 
   describe "GET /index" do
@@ -87,14 +87,15 @@ RSpec.describe "/bancos", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "Banco B", tipo: :oracle }
       }
 
       it "updates the requested banco" do
         banco = Banco.create! valid_attributes
         patch banco_url(banco), params: { banco: new_attributes }
         banco.reload
-        skip("Add assertions for updated state")
+        expect(banco.name).to eq("Banco B")
+        expect(banco.tipo).to eq("oracle")
       end
 
       it "redirects to the banco" do

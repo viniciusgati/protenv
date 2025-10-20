@@ -18,11 +18,17 @@ RSpec.describe "/binarios", type: :request do
   # Binario. As you add validations to Binario, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: "CLI",
+      tipo: :appserver,
+      download_url: "https://example.com/cli.tar.gz",
+      auth_username: "user",
+      auth_password: "pass"
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: "", tipo: nil, download_url: "ftp://invalid", auth_username: "", auth_password: "" }
   }
 
   describe "GET /index" do
@@ -87,14 +93,15 @@ RSpec.describe "/binarios", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "NewName", tipo: :dbaccess, download_url: "https://example.com/new.bin", auth_username: "u2", auth_password: "p2" }
       }
 
       it "updates the requested binario" do
         binario = Binario.create! valid_attributes
         patch binario_url(binario), params: { binario: new_attributes }
         binario.reload
-        skip("Add assertions for updated state")
+        expect(binario.name).to eq("NewName")
+        expect(binario.tipo).to eq("dbaccess")
       end
 
       it "redirects to the binario" do

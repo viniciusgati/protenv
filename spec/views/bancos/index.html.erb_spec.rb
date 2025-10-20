@@ -16,8 +16,8 @@ RSpec.describe "bancos/index", type: :view do
 
   it "renders a list of bancos" do
     render
-    cell_selector = 'div>p'
-    assert_select cell_selector, text: Regexp.new("Name".to_s), count: 2
-    assert_select cell_selector, text: /postgres/i, count: 2
+    assert_select 'table tbody tr', count: 2
+    assert_select 'table tbody tr td', text: /Name/, count: 2
+    assert_select 'table tbody tr td', text: /postgres/i, count: 2
   end
 end

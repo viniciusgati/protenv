@@ -7,6 +7,10 @@ class User < ApplicationRecord
   has_many :instalacaos, dependent: :destroy
   has_one_attached :avatar
 
+  # Rails Active Record Encryption (encrypted at rest with app key)
+  encrypts :totvs_username
+  encrypts :totvs_password
+
   def display_name
     name.presence || email
   end

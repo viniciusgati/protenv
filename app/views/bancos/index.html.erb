@@ -20,9 +20,11 @@
         <td><%= banco.tipo %></td>
         <td><%= banco.backup.attached? ? banco.backup.filename.to_s : '-' %></td>
         <td>
-          <%= link_to "Mostrar", banco %>
-          <%= link_to "Editar", edit_banco_path(banco) %>
-          <%= button_to "Excluir", banco, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } } %>
+          <div class="actions">
+            <%= link_to "Mostrar", banco, class: 'btn' %>
+            <%= link_to "Editar", edit_banco_path(banco), class: 'btn' %>
+            <%= link_to "Excluir", banco, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: 'btn btn-danger' %>
+          </div>
         </td>
       </tr>
     <% end %>

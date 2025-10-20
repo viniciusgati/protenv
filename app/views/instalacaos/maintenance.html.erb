@@ -1,0 +1,114 @@
+<% content_for :title, "Manutenção do Ambiente" %>
+<h1>Manutenção: <%= @instalacao.name %></h1>
+
+<div class="card" style="margin-bottom:16px;">
+  <h3 style="display:flex; align-items:center; justify-content:space-between;">
+    <span>Downloads</span>
+    <span>
+      <button id="btn-all" class="btn btn-primary" onclick="startAllDownloads()">Baixar todos</button>
+      <span id="spin-all" class="spinner hidden" aria-label="Processando"></span>
+    </span>
+  </h3>
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+    <div class="card">
+      <h4>App Server</h4>
+      <p><strong>Binário:</strong> <%= @app_bin&.name %></p>
+      <p><small><%= @app_bin&.download_url %></small></p>
+      <div>
+        <button id="btn-app" class="btn btn-primary" onclick="startDownload('appserver')">Baixar</button>
+        <span id="spin-app" class="spinner hidden" aria-label="Processando"></span>
+      </div>
+      <div style="margin-top:8px;">
+        <div style="height:10px;background:#1f2937;border-radius:6px;overflow:hidden;">
+          <div id="bar-app" style="height:10px;width:0;background:#10b981;"></div>
+        </div>
+        <small id="txt-app" class="muted">Aguardando…</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4>DB Access</h4>
+      <p><strong>Binário:</strong> <%= @db_bin&.name %></p>
+      <p><small><%= @db_bin&.download_url %></small></p>
+      <div>
+        <button id="btn-db" class="btn btn-primary" onclick="startDownload('dbaccess')">Baixar</button>
+        <span id="spin-db" class="spinner hidden" aria-label="Processando"></span>
+      </div>
+      <div style="margin-top:8px;">
+        <div style="height:10px;background:#1f2937;border-radius:6px;overflow:hidden;">
+          <div id="bar-db" style="height:10px;width:0;background:#f59e0b;"></div>
+        </div>
+        <small id="txt-db" class="muted">Aguardando…</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const csrf = document.querySelector('meta[name="csrf-token"]').content;
+const base = '<%= polymorphic_path(@instalacao) %>';
+
+function setProcessing(kind, on) {
+  const map = {
+    appserver: { btn: 'btn-app', spin: 'spin-app', txt: 'txt-app' },
+    dbaccess:  { btn: 'btn-db',  spin: 'spin-db',  txt: 'txt-db' }
+  }[kind];
+  const btn = document.getElementById(map.btn);
+  const spin = document.getElementById(map.spin);
+  const txt = document.getElementById(map.txt);
+  btn.disabled = !!on;
+  if (on) {
+    spin.classList.remove('hidden');
+    txt.textContent = 'Iniciando…';
+    // give immediate visual hint
+    const bar = document.getElementById(kind === 'appserver' ? 'bar-app' : 'bar-db');
+    bar.style.width = '5%';
+  } else {
+    spin.classList.add('hidden');
+  }
+}
+
+function startDownload(kind){
+  setProcessing(kind, true);
+  fetch(`${base}/start_download?kind=${kind}`, { method: 'POST', headers: { 'X-CSRF-Token': csrf }})
+    .then(r => r.json())
+    .then((data) => { updateStatus(kind, data); poll(kind); })
+    .catch(() => { setProcessing(kind, false); });
+}
+
+function startAllDownloads(){
+  const all = document.getElementById('btn-all');
+  const spinAll = document.getElementById('spin-all');
+  all.disabled = true; spinAll.classList.remove('hidden');
+  setProcessing('appserver', true); setProcessing('dbaccess', true);
+  fetch(`${base}/start_all_downloads`, { method: 'POST', headers: { 'X-CSRF-Token': csrf }})
+    .then(r => r.json())
+    .then(() => { poll('appserver'); poll('dbaccess'); })
+    .catch(() => { all.disabled = false; spinAll.classList.add('hidden'); setProcessing('appserver', false); setProcessing('dbaccess', false); });
+}
+
+function updateStatus(kind, data){
+  const txt = document.getElementById(kind === 'appserver' ? 'txt-app' : 'txt-db');
+  const p = data.progress || 0;
+  txt.textContent = (data.status ? `${p}% ${data.status}` : `${p}%`);
+}
+
+function poll(kind){
+  const bar = document.getElementById(kind === 'appserver' ? 'bar-app' : 'bar-db');
+  fetch(`${base}/download_progress?kind=${kind}`)
+    .then(r => r.json())
+    .then(data => {
+      const p = data.progress || 0;
+      bar.style.width = p + '%';
+      updateStatus(kind, data);
+      if(data.status === 'done' || data.status === 'failed') {
+        setProcessing(kind, false);
+        const all = document.getElementById('btn-all');
+        const spinAll = document.getElementById('spin-all');
+        all.disabled = false; spinAll.classList.add('hidden');
+        return;
+      }
+      setTimeout(() => poll(kind), 1000);
+    })
+}
+</script>

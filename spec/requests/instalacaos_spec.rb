@@ -13,16 +13,30 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/instalacaos", type: :request do
+  let(:current_user) { FactoryBot.create(:user) }
+  before do
+    sign_in current_user
+  end
   
   # This should return the minimal set of attributes required to create a valid
   # Instalacao. As you add validations to Instalacao, be sure to
   # adjust the attributes here as well.
+  let(:app_bin) { FactoryBot.create(:binario, tipo: :appserver) }
+  let(:db_bin)  { FactoryBot.create(:binario, :dbaccess) }
+  let(:banco)   { FactoryBot.create(:banco) }
+
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      name: "Inst A",
+      appserver_binario_id: app_bin.id,
+      dbaccess_binario_id: db_bin.id,
+      banco_id: banco.id,
+      user: current_user
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: "", appserver_binario_id: nil, dbaccess_binario_id: nil, banco_id: nil }
   }
 
   describe "GET /index" do
@@ -87,14 +101,14 @@ RSpec.describe "/instalacaos", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "Inst B", appserver_binario_id: app_bin.id, dbaccess_binario_id: db_bin.id, banco_id: banco.id }
       }
 
       it "updates the requested instalacao" do
         instalacao = Instalacao.create! valid_attributes
         patch instalacao_url(instalacao), params: { instalacao: new_attributes }
         instalacao.reload
-        skip("Add assertions for updated state")
+        expect(instalacao.name).to eq("Inst B")
       end
 
       it "redirects to the instalacao" do

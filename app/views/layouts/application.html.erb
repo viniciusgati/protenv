@@ -23,16 +23,17 @@
 
   <body>
     <nav>
-      <%= link_to 'Home', root_path %>
-      <%= link_to 'Binários', binarios_path %>
-      <%= link_to 'Bancos', bancos_path %>
-      <%= link_to 'Instalações', instalacaos_path %>
+      <%= link_to 'Home', root_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Binários', binarios_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Bancos', bancos_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Instalações', instalacaos_path, class: 'btn btn-secondary' %>
       <span style="flex:1"></span>
       <% if user_signed_in? %>
-        <%= button_to 'Logout', destroy_user_session_path, method: :delete %>
+        <%= link_to 'Credenciais', edit_credentials_path, class: 'btn' %>
+        <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, class: 'btn btn-danger' %>
       <% else %>
-        <%= link_to 'Login', new_user_session_path %>
-        <%= link_to 'Sign up', new_user_registration_path %>
+        <%= link_to 'Login', new_user_session_path, class: 'btn' %>
+        <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-primary' %>
       <% end %>
     </nav>
     <div class="container">

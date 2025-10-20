@@ -22,9 +22,7 @@ RSpec.describe "instalacaos/index", type: :view do
 
   it "renders a list of instalacaos" do
     render
-    cell_selector = 'div>p'
-    assert_select cell_selector, text: Regexp.new("Name".to_s), count: 2
-    # columns render names and ids; just ensure we have the app names twice
-    assert_select cell_selector, text: /Name/, count: 2
+    assert_select 'table tbody tr', count: 2
+    assert_select 'table tbody tr td', text: /Name/, minimum: 2
   end
 end

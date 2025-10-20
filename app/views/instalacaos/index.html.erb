@@ -29,9 +29,12 @@
           <%= instalacao.user&.display_name %>
         </td>
         <td>
-          <%= link_to "Mostrar", instalacao %>
-          <%= link_to "Editar", edit_instalacao_path(instalacao) %>
-          <%= button_to "Excluir", instalacao, method: :delete, form: { data: { turbo_confirm: "Tem certeza?" } } %>
+          <div class="actions">
+            <%= link_to "Mostrar", instalacao, class: 'btn' %>
+            <%= link_to "Editar", edit_instalacao_path(instalacao), class: 'btn' %>
+            <%= link_to "Manutenção", maintenance_instalacao_path(instalacao), class: 'btn btn-secondary' %>
+            <%= link_to "Excluir", instalacao, data: { turbo_method: :delete, turbo_confirm: "Tem certeza?" }, class: 'btn btn-danger' %>
+          </div>
         </td>
       </tr>
     <% end %>

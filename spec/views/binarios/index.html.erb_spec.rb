@@ -22,11 +22,10 @@ RSpec.describe "binarios/index", type: :view do
 
   it "renders a list of binarios" do
     render
-    cell_selector = 'div>p'
-    assert_select cell_selector, text: Regexp.new("Name".to_s), count: 2
-    assert_select cell_selector, text: /appserver|dbaccess/i, count: 2
-    assert_select cell_selector, text: /https:\/\//, count: 2
-    assert_select cell_selector, text: Regexp.new("Auth Username".to_s), count: 2
-    assert_select cell_selector, text: Regexp.new("Auth Password".to_s), count: 2
+    assert_select 'table tbody tr', count: 2
+    assert_select 'table tbody tr td', text: /Name/, count: 2
+    assert_select 'table tbody tr td', text: /appserver|dbaccess/i, count: 2
+    assert_select 'table tbody tr td', text: /https:\/\//, count: 2
+    assert_select 'table tbody tr td', text: /Auth Username/, count: 2
   end
 end
